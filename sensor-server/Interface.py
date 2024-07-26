@@ -27,7 +27,7 @@ class Interface():
             if (time()-time_initial) >= self.wait_time:
                 break
             for index, arduino in enumerate(self.connections):
-                data = arduino.readline().decode("utf-8")
+                data = arduino.readline().decode("utf-8").strip("\r").strip("\n")
                 if (data) != '':
-                    values[index] = int(data.strip("\r").strip("\n"))
+                    values[index] = int(data)
         return values
