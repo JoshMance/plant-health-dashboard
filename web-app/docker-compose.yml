@@ -1,6 +1,6 @@
 services:
-  web-app:
+  server:
     build: 
       dockerfile: ./Dockerfile
     ports:
-      - "8000:5000"
+      - "4000"

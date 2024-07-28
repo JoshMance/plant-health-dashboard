@@ -17,4 +17,4 @@ RUN npm install
 CMD node server.js
 
 # Exposing server port
-EXPOSE 5000
+EXPOSE 3000

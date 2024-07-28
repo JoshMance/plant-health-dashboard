@@ -1,4 +1,6 @@
 from Interface import *
+from numpy import mean, std
+from json import dumps
 # import redis
 
 # Connect to Redis
@@ -8,10 +10,13 @@ from Interface import *
 # value = client.get('key')
 # print(f'GET result -> {value.decode("utf-8")}')
 
-interface = Interface(ports=['/dev/ttyACM0', '/dev/ttyACM1'], 
-              baudrate=9600, 
-              timeout=0.1, 
-              wait_time = 3)
+PORTS = [] #['/dev/ttyACM0', '/dev/ttyACM1']
 
-data = interface.get_moisture_values()
-print(data)
+interface = Interface(ports=PORTS, baudrate=9600, timeout=0.1, wait_time = 3)
+
+values = interface.get_moisture_values()
+if values == None:
+    print(None)
+else:
+    data = dumps({"num_sensors":len(values), "mean":mean(values), "sd":std(values)})
+    print(data)
