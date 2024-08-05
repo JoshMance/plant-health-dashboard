@@ -28,7 +28,7 @@ class Interface():
             return None
         else:
             time_initial = time()
-            values = []
+            values = [None]
             num_measurements = 0
             while (num_measurements < num_connections):
                 if (time()-time_initial) >= self.wait_time:
@@ -38,4 +38,6 @@ class Interface():
                     if (data) != '':
                         values[index] = int(data)
                         num_measurements += 1
+            
+            
             return values

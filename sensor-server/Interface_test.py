@@ -1,7 +1,7 @@
 from Interface import *
 
 
-x = Interface(ports=['/dev/ttyACM0', '/dev/ttyACM1'], 
+x = Interface(ports=['/dev/ttyACM0'], 
               baudrate=9600, 
               timeout=0.1, 
               wait_time = 2)

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+$( document ).ready(function() {
+
+    const initial_time = Math.floor( Date.now() / 1000 );
+
+var dataPoints = [];
+
+var options = {
+	theme: "light2",
+	title: {
+		text: "Plant Moisture"
+	},
+	axisX:{
+  		title:"Time (seconds)",
+ 	},
+ 	axisY:{
+  		title:"Resistivity value",
+ 	},
+	data: [{
+		type: "spline",
+		dataPoints: dataPoints
+	}]
+};
+
+$("#chartContainer").CanvasJSChart(options);
+updateData();
+
+// Initial Values
+var xValue = 0;
+var yValue = 500;
+var newDataCount = 6;
+
+function addData(data) {
+    console.log(data);
+	if (newDataCount != 1) {
+		$.each(data, function (key, value) {
+			dataPoints.push({ x: value[0] - initial_time, y: parseInt(value[1]) });
+			xValue++;
+			yValue = parseInt(value[1]);
+		});
+		newDataCount = 1;
+	} else {
+		//dataPoints.shift();
+		dataPoints.push({ x: data["time"] - initial_time, y: parseInt(data["mean"]) });
+		xValue++;
+		yValue = parseInt(data["mean"]);
+	}
+	$("#chartContainer").CanvasJSChart().render();
+	setTimeout(updateData, 1000);
+}
+
+function updateData() {
+	$.getJSON("http://localhost:4000/data", addData);
+}
+
+})
+</script>
+</head>
+<body>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.canvasjs.com/jquery.canvasjs.min.js"></script>
+</body>
+</html>
+
+
+
